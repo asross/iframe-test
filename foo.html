@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title> IFrame Test </title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type='text/javascript'>
+      $(document).ready(function() {
+        $('#select-url').click(function() {
+          $('#iframe').attr('src', $('#url').val());
+        });
+      });
+    </script>
+    <style>
+      body {
+        background-color: skyblue;
+      }
+      input#url {
+        margin-left: 2.5%;
+        margin-bottom: 10px;
+        font-size: 1.25em;
+        width: 50%;
+      }
+      button#select-url {
+        padding: 8px;
+        border-radius: 3px;
+        position: relative;
+        top: -5px;
+      }
+      iframe#iframe {
+        width: 95%;
+        margin-left: 2.5%;
+        height: 500px;
+        background-color: lightblue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <input id="url"></input>
+    <button id="select-url">Change url</button>
+    <iframe id='iframe'></iframe>
+  </body>
+
+</html>
