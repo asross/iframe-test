@@ -1,16 +1,16 @@
-ENV["RAILS_ENV"] = 'test'
-require File.expand_path("../../config/environment", __FILE__)
-require 'rspec/rails'
-require 'rspec/autorun'
-require 'capybara/poltergeist'
+ENV['RACK_ENV'] = 'test'
+require_relative '../app.rb'
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+require 'rspec/autorun'
+require 'capybara/rspec'
+require 'capybara/poltergeist'
+require 'pry'
+
+include Capybara::DSL
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, inspector: 'open', js_errors: false)
 end
 
 Capybara.javascript_driver = :poltergeist
-
+Capybara.app = Sinatra::Application
