@@ -1,15 +1,1 @@
-<script type='text/javascript'>
-  window.prevent_bust = null
-  window.onbeforeunload = function() { if (prevent_bust) prevent_bust++; };
-  setInterval(function() {
-    if (prevent_bust && prevent_bust > 0) {
-      prevent_bust -= 2;
-      window.top.location = '?busted=1';
-    }
-  }, 1);
-</script>
-<iframe style='width: 50%; height: 500px' onload='window.prevent_bust = 0;' src='<%= params[:url] %>'></iframe>
-
-<% if params[:busted] %>
-  <span> framebuster </span>
-<% end %>
+<iframe style='width: 50%; height: 500px' src='<%= params[:url] %>'></iframe>

@@ -15,19 +15,22 @@ describe 'iframe test', :js => true do
   def framebuster?(url)
     visit "/?url=#{CGI.escape(url)}"
     sleep 0.75
-    return true if page.has_content? 'framebuster'
-    return true if current_host != 'http://127.0.0.1'
-    false
+    current_host != 'http://127.0.0.1'
   end
 
   urls.each do |url|
     specify "for #{url}" do
-      if xfo = x_frame_options(url)
-        system "echo '--- #{url}: X-FRAME-OPTIONS #{xfo}' >> #{result_filename}"
-      elsif framebuster?(url)
-        system "echo '--- #{url}: FRAMEBUSTER' >> #{result_filename} "
-      else
-        system "echo '--- #{url}: OK' >> #{result_filename}"
+      begin
+        if xfo = x_frame_options(url)
+          system "echo '#{url}, x-frame-options(#{xfo})' >> #{result_filename}"
+        elsif framebuster?(url)
+          system "echo '#{url}, framebuster' >> #{result_filename} "
+        else
+          system "echo '#{url}, ok' >> #{result_filename}"
+        end
+      rescue => e
+        puts "errored on #{url}: #{e.message}"
+        system "echo '#{url}, error' >> #{result_filename}"
       end
     end
   end
